@@ -1,16 +1,21 @@
-const express = require('express'); // Sunucu oluşturmamızı sağlayan kütüphane
-const cors = require('cors');       // Frontend'in backend'e erişmesine izin veren güvenlik ayarı
+const express = require('express');
+const cors = require('cors');
 const app = express();
 
-app.use(cors()); // CORS ayarını aktif ediyoruz
+app.use(cors({ origin: '*' }));
 
-// Tarayıcıdan veya Frontend'den bir istek geldiğinde bu mesajı gönderecek
-app.get('/api/mesaj', (req, res) => {
-  res.json({ mesaj: "Bulut projesi backend'den selamlar!" });
+app.get('/api/hava-durumu', (req, res) => {
+    res.json({
+        sehir: "Ankara",
+        derece: 11,
+        durum: "Bulutlu",
+        sunucu: "AWS Virginia (USA)",
+        ip: "44.192.27.187",
+        zaman: new Date().toLocaleTimeString('tr-TR', { timeZone: 'Europe/Istanbul' })
+    });
 });
 
-// Sunucunun çalışacağı kapı (port) numarası
 const PORT = 5000;
 app.listen(PORT, () => {
-  console.log(`Backend ${PORT} portunda başarıyla çalışıyor`);
+    console.log(`Backend ${PORT} portunda çalışıyor`);
 });
